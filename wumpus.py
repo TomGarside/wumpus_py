@@ -1,49 +1,7 @@
 from random import randint
 import re
-
-RAND_MAX = 20
-RAND_MIN = 1
-
-
-class Cave:
-    _cave_rooms = {}
-    cave_map = {1: [2, 5, 6], 2: [1, 3, 7], 3: [2, 4, 8], 4: [3, 5, 9], 5: [1, 4, 10],
-                6: [1, 11, 12], 7: [3, 12, 13], 8: [4, 14, 15], 9: [4, 14, 15], 10: [5, 11, 15],
-                11: [6, 10, 16], 12: [6, 7, 17], 13: [7, 8, 18], 14: [8, 9, 19], 15: [9, 10, 20],
-                16: [11, 17, 20], 17: [12, 16, 18], 18: [13, 17, 19], 19: [14, 18, 20], 20: [15, 16, 19]}
-
-    def __init__(self):
-        for e in range(RAND_MIN, RAND_MAX+1):
-            self._cave_rooms[e] = Room(self.cave_map[e])
-        self._cave_rooms[randint(RAND_MIN, RAND_MAX)].pit = True
-        self._cave_rooms[randint(RAND_MIN, RAND_MAX)].bats = True
-        self._cave_rooms[randint(RAND_MIN, RAND_MAX)].bats = True
-        self._cave_rooms[randint(RAND_MIN, RAND_MAX)].wumpus = True
-
-    def visit_room(self, room):
-        return self._cave_rooms[int(room)].get_room()
-
-
-class Room:
-    wumpus, pit, bats = False, False, False
-    paths = {}
-
-    def __init__(self, room_map):
-        self.paths['1'] = room_map[0]
-        self.paths['2'] = room_map[1]
-        self.paths['3'] = room_map[2]
-
-    def get_room(self):
-        return self.wumpus, self.pit, self.bats
-
-
-class Adventurer:
-    arrows = 5
-    current_room = 1
-
-    def set_current_room(self, room):
-        self.current_room = room
-
+from adventurer import Adventurer
+from cave import Cave
 
 class PlayGame:
     _game_over, _game_win = False, False
