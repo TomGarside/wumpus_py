@@ -45,6 +45,7 @@ class PlayGame:
         goto_schemes = ("GO", "GOTO", "GO TO", "G")
         shoot_schemes = ("SHOOT", "S")
         look_schemes = ("LOOK", "L")
+        quit_schemes = ("QUIT", "Q")
 
         if self._user_input.upper().startswith(goto_schemes):
             room = re.search("\d+", self._user_input).group()
@@ -56,6 +57,9 @@ class PlayGame:
 
         elif self._user_input.upper().startswith(look_schemes):
             self._look()
+        elif self._user_input.upper().startswith(quit_schemes):
+            print("Goodbye....")
+            self._game_over = True
 
         else:
             print("SORRY I DIDN'T UNDERSTAND THAT")
