@@ -7,6 +7,7 @@ class Cave:
 
     _RAND_MAX = 20
     _RAND_MIN = 1
+    _wumpus_room = 0
 
     _cave_rooms = {}
     cave_map = {1: [2, 5, 6], 2: [1, 3, 7], 3: [2, 4, 8], 4: [3, 5, 9], 5: [1, 4, 10],
@@ -20,8 +21,15 @@ class Cave:
         self._cave_rooms[randint(self._RAND_MIN, self._RAND_MAX)].pit = True
         self._cave_rooms[randint(self._RAND_MIN, self._RAND_MAX)].bats = True
         self._cave_rooms[randint(self._RAND_MIN, self._RAND_MAX)].bats = True
-        self._cave_rooms[randint(self._RAND_MIN, self._RAND_MAX)].wumpus = True
+        self._wumpus_room = randint(self._RAND_MIN, self._RAND_MAX)
+        self._cave_rooms[self._wumpus_room].wumpus = True
 
     def visit_room(self, room):
         return self._cave_rooms[int(room)].get_room()
+
+    def wumpus_move(self):
+        self._cave_rooms[self._wumpus_room].wumpus = False
+        self._wumpus_room = randint(self._RAND_MIN, self._RAND_MAX)
+        self._cave_rooms[self._wumpus_room].wumpus = True
+
 

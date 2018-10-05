@@ -83,6 +83,7 @@ class PlayGame:
                 self._game_over = True
                 return
         print("CRUNCH THE ARROW BREAKS AGAINST THE STONE WALL OF THE CAVE!")
+        self._arrow_missed()
 
     def _look(self):
         rooms = self._game_cave.cave_map[self._game_adventurer.current_room]
@@ -97,6 +98,11 @@ class PlayGame:
                 print("YOU HEAR A RUSH OF WIND WHISTLING FROM A NEARBY CAVE!")
             if self._game_cave.visit_room(e)[2]:
                 print("YOU HEAR A LEATHERY FLAPPING NOISE!")
+
+    def _arrow_missed(self):
+        if randint(0, 3) != 3:
+            print("You woke the Wumpus!")
+            self._game_cave.wumpus_move()
 
     def _encountered_wumpus(self):
         print("YOU ARE DEVOURED BY THE EVIL WUMPUS")
