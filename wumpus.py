@@ -3,11 +3,14 @@ import re
 from adventurer import Adventurer
 from cave import Cave
 
+
 class PlayGame:
     _game_over, _game_win = False, False
     _game_cave = []
     _game_adventurer = Adventurer()
     _user_input = ""
+    _RAND_MAX = 20
+    _RAND_MIN = 1
 
     def __init__(self):
         self._game_cave = Cave()
@@ -53,7 +56,7 @@ class PlayGame:
 
         elif self._user_input.upper().startswith(shoot_schemes):
             room = re.search("\d+", self._user_input).group()
-            self._shoot_arrow(room)
+            self._shoot_arrow(int(room))
 
         elif self._user_input.upper().startswith(look_schemes):
             self._look()
@@ -71,22 +74,10 @@ class PlayGame:
         else:
             print("YOU CANT GET THERE FROM HERE")
 
-    def _encountered_wumpus(self):
-        print("YOU ARE DEVOURED BY THE EVIL WUMPUS")
-        self._game_over = True
-
-    def _encountered_bats(self):
-        print("OH NO YOU WERE GRABBED BY THE SUPER BATS")
-        self._game_adventurer.current_room = randint(RAND_MIN, RAND_MAX)
-
-    def _encountered_pit(self):
-        print("YOU STUMBLE DOWN A BOTTOMLESS PIT!!")
-        self._game_over = True
-
     def _shoot_arrow(self, room):
         print("TWWANG YOU LOOSE AN ARROW FROM YOUR MIGHTY YEW BOW!!")
         if room in self._game_cave.cave_map[self._game_adventurer.current_room]:
-            if self._game_cave._cave_rooms[room].wumpus:
+            if self._game_cave.visit_room(room)[0]:
                 print("YOUR SWIFT ARROW PUNCTURES THE HEART OF THE STINKING BEAST!")
                 self._game_win = True
                 self._game_over = True
@@ -106,6 +97,18 @@ class PlayGame:
                 print("YOU HEAR A RUSH OF WIND WHISTLING FROM A NEARBY CAVE!")
             if self._game_cave.visit_room(e)[2]:
                 print("YOU HEAR A LEATHERY FLAPPING NOISE!")
+
+    def _encountered_wumpus(self):
+        print("YOU ARE DEVOURED BY THE EVIL WUMPUS")
+        self._game_over = True
+
+    def _encountered_bats(self):
+        print("OH NO YOU WERE GRABBED BY THE SUPER BATS")
+        self._game_adventurer.current_room = randint(self._RAND_MIN, self._RAND_MAX)
+
+    def _encountered_pit(self):
+        print("YOU STUMBLE DOWN A BOTTOMLESS PIT!!")
+        self._game_over = True
 
 
 game = PlayGame()

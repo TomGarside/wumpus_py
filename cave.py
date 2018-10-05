@@ -3,7 +3,6 @@ from random import randint
 from room import Room
 
 
-
 class Cave:
 
     _RAND_MAX = 20
